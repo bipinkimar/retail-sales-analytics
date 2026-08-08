@@ -1,0 +1,91 @@
+-- ============================================================
+-- Retail Sales Analytics | Analytics Layer
+-- Star Schema: Dimensions + Sales Fact
+-- ============================================================
+
+USE DATABASE RETAIL_DB;
+USE SCHEMA ANALYTICS;
+
+CREATE OR REPLACE TABLE DIM_PRODUCT AS
+SELECT
+    PRODUCT_ID,
+    PRODUCT_NAME,
+    CATEGORY,
+    LIST_PRICE,
+    UNIT_COST
+FROM RETAIL_DB.STAGING.PRODUCT_STG;
+
+CREATE OR REPLACE TABLE DIM_CUSTOMER AS
+SELECT
+    CUSTOMER_ID,
+    CUSTOMER_NAME,
+    GENDER,
+    AGE,
+    CITY,
+    STATE,
+    CUSTOMER_SEGMENT,
+    SIGNUP_DATE
+FROM RETAIL_DB.STAGING.CUSTOMER_STG;
+
+CREATE OR REPLACE TABLE DIM_DATE AS
+SELECT DISTINCT
+    ORDER_DATE AS DATE_KEY,
+    YEAR(ORDER_DATE) AS YEAR,
+    QUARTER(ORDER_DATE) AS QUARTER,
+    MONTH(ORDER_DATE) AS MONTH_NUMBER,
+    MONTHNAME(ORDER_DATE) AS MONTH_NAME,
+    DAY(ORDER_DATE) AS DAY,
+    DAYNAME(ORDER_DATE) AS DAY_NAME
+FROM RETAIL_DB.STAGING.ORDER_STG
+ORDER BY DATE_KEY;
+
+CREATE OR REPLACE TABLE FACT_SALES AS
+SELECT
+    oi.ORDER_ITEM_ID,
+    o.ORDER_ID,
+    o.CUSTOMER_ID,
+    oi.PRODUCT_ID,
+    o.ORDER_DATE,
+    o.CHANNEL,
+    o.PAYMENT_METHOD,
+    o.ORDER_STATUS,
+    oi.QUANTITY,
+    oi.UNIT_PRICE,
+    oi.DISCOUNT_PCT,
+
+    oi.QUANTITY * oi.UNIT_PRICE AS GROSS_SALES,
+
+    CASE
+        WHEN oi.DISCOUNT_PCT IS NOT NULL
+        THEN (oi.QUANTITY * oi.UNIT_PRICE)
+             * (oi.DISCOUNT_PCT / 100)
+    END AS DISCOUNT_AMOUNT,
+
+    CASE
+        WHEN oi.DISCOUNT_PCT IS NOT NULL
+        THEN (oi.QUANTITY * oi.UNIT_PRICE)
+             - (
+                 (oi.QUANTITY * oi.UNIT_PRICE)
+                 * (oi.DISCOUNT_PCT / 100)
+             )
+    END AS NET_SALES,
+
+    oi.QUANTITY * p.UNIT_COST AS TOTAL_COST,
+
+    CASE
+        WHEN oi.DISCOUNT_PCT IS NOT NULL
+        THEN (
+            (oi.QUANTITY * oi.UNIT_PRICE)
+            - (
+                (oi.QUANTITY * oi.UNIT_PRICE)
+                * (oi.DISCOUNT_PCT / 100)
+            )
+        )
+        - (oi.QUANTITY * p.UNIT_COST)
+    END AS PROFIT
+
+FROM RETAIL_DB.STAGING.ORDER_ITEM_STG AS oi
+JOIN RETAIL_DB.STAGING.ORDER_STG AS o
+    ON oi.ORDER_ID = o.ORDER_ID
+JOIN RETAIL_DB.STAGING.PRODUCT_STG AS p
+    ON oi.PRODUCT_ID = p.PRODUCT_ID;

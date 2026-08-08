@@ -1,0 +1,18 @@
+-- ============================================================
+-- Retail Sales Analytics | Snowflake Environment Setup
+-- ============================================================
+
+CREATE WAREHOUSE IF NOT EXISTS RETAIL_WH
+    WAREHOUSE_SIZE = 'XSMALL'
+    AUTO_SUSPEND = 60
+    AUTO_RESUME = TRUE
+    INITIALLY_SUSPENDED = TRUE;
+
+CREATE DATABASE IF NOT EXISTS RETAIL_DB;
+
+CREATE SCHEMA IF NOT EXISTS RETAIL_DB.RAW;
+CREATE SCHEMA IF NOT EXISTS RETAIL_DB.STAGING;
+CREATE SCHEMA IF NOT EXISTS RETAIL_DB.ANALYTICS;
+
+USE WAREHOUSE RETAIL_WH;
+USE DATABASE RETAIL_DB;
