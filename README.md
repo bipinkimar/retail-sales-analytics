@@ -265,7 +265,7 @@ This avoids unnecessarily processing the complete customer dataset for every exe
 The final Power BI report contains four interactive pages.
 
 1. Executive Dashboard
-![](https://github.com/bipinkimar/retail-sales-analytics/tree/main)
+![retail_analysis_dashboard](retail-sales-analytics/tree/main)
 Provides an overall business overview using:
 
 KPI cards
