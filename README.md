@@ -1,35 +1,66 @@
-# Retail Sales Analytics — Snowflake
+# Retail Sales Analytics
 
-This folder contains the Snowflake SQL used for the retail sales analytics project.
+An end-to-end retail sales analytics project built using **Python, Snowflake, SQL, and Power BI**.
 
-## Architecture
+The project demonstrates the complete data analytics workflow, from data cleaning and cloud data warehousing to 
+incremental data processing and interactive business intelligence dashboards.
 
-Raw CSV files
-→ Internal Stage
-→ RAW tables
-→ STAGING tables
-→ ANALYTICS star schema
-→ Streams
-→ Tasks
-→ Incremental MERGE
-→ Power BI
+---
 
-## SQL files
+## 📌 Project Overview
 
-| File | Purpose |
-|---|---|
-| `01_environment_setup.sql` | Warehouse, database, and schema setup |
-| `02_raw_layer_and_stage.sql` | Raw tables, CSV file format, and internal stage |
-| `03_raw_load.sql` | COPY INTO commands for six cleaned CSV files |
-| `04_staging_and_business_logic.sql` | Staging tables and sales calculations |
-| `05_analytics_model.sql` | Dimension and fact tables |
-| `06_customer_incremental_automation.sql` | Stream, MERGE, and automated task |
-| `07_validation.sql` | Data-quality and row-count checks |
+The objective of this project is to build a scalable retail sales analytics solution that transforms raw retail data into meaningful business insights.
 
-## Notes
+The project covers:
 
-- The source data was cleaned before Snowflake ingestion.
-- `DISCOUNT_PCT` is stored as a whole-number percentage (for example, `10` means 10%).
-- `FACT_SALES` is the transactional fact table at order-item grain.
-- `CUSTOMER_STREAM` captures changes to `RAW.CUSTOMER_RAW`.
-- `CUSTOMER_LOAD_TASK` processes stream changes incrementally with `MERGE`.
+- Data cleaning and preprocessing using Python
+- Cloud data warehousing using Snowflake
+- Raw, staging, and analytics layers
+- Star schema data modeling
+- Fact and dimension tables
+- Sales and profit calculations
+- Incremental data processing using Snowflake Streams
+- Automated processing using Snowflake Tasks
+- MERGE-based upsert logic
+- DAX measures and interactive Power BI dashboards
+- Business analysis across sales, customers, and products
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+Raw Retail Data
+       │
+       ▼
+   Python / Colab
+       │
+       │ Data Cleaning & Validation
+       ▼
+   Snowflake Stage
+       │
+       ▼
+   RAW Layer
+       │
+       ▼
+  STAGING Layer
+       │
+       ├───────────────┐
+       │               │
+       ▼               ▼
+ Dimension Tables    FACT_SALES
+       │               │
+       └───────┬───────┘
+               ▼
+        Analytics Layer
+               │
+       Streams + Tasks
+               │
+          MERGE / Upsert
+               │
+               ▼
+           Power BI
+               │
+               ▼
+      Interactive Dashboard
+
