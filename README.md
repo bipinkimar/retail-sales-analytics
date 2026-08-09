@@ -304,7 +304,9 @@ Average Discount
 Sales by Customer Segment
 Top 10 Customers
 Sales by State
+
 4. Product Analysis Dashboard
+![](https://github.com/bipinkimar/retail-sales-analytics/blob/main/retail_analysis_dashboard-4.jpg)
 
 Focuses on product performance.
 
