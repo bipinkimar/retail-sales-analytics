@@ -289,8 +289,9 @@ Profit Margin
 Monthly Sales vs Profit
 Top 10 Products
 Sales by Payment Method
-3. Customer Insights Dashboard
 
+3. Customer Insights Dashboard
+![]Chttps://github.com/bipinkimar/retail-sales-analytics/blob/main/retail_analysis_dashboard-3.jpg)
 Focuses on customer behavior and contribution.
 
 Key analysis includes:
