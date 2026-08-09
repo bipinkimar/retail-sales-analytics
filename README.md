@@ -266,15 +266,17 @@ The final Power BI report contains four interactive pages.
 
 1. Executive Dashboard
 ![](https://github.com/bipinkimar/retail-sales-analytics/blob/main/retail_analysis_dashboard-1.jpg)
+
 Provides an overall business overview using:
 
 KPI cards
 Monthly sales trend
 Sales by category
 Sales by channel
-Interactive slicers
+
 2. Sales Performance Dashboard
-![](retail_analysis_dashboard-2.jpg)
+![](https://github.com/bipinkimar/retail-sales-analytics/blob/main/retail_analysis_dashboard-2.jpg)
+
 Focuses on sales and profitability.
 
 Key analysis includes:
